@@ -1,1 +1,5 @@
 name = Maxymiser
+description = Adds Maxymiser tracking code to the top of pages
+package = Statistics
+configure = admin/config/system/maxymiser
+core = 7.x

@@ -1,0 +1,131 @@
+<?php
+/**
+ * @file
+ *
+ * Adds Maxymiser tag to the header of pages
+ *
+ * SAMPLE TAG:
+ * <script type="text/javascript" src="//service.maxymiser.net/cdn/<<YOUR SITE ID>>/js/mmcore.js"></script>
+ */
+
+// Remove tracking from all administrative pages.
+define('MAXYMISER_EXCLUDE_PATHS', "admin\nadmin/*\nbatch\nnode/add*\nnode/*/*\nuser/*/*");
+
+/**
+ * Implements hook_menu().
+ */
+function maxymiser_menu() {
+
+  $items = array();
+
+  $items['admin/config/system/maxymiser'] = array(
+    'title' => t('Maxymiser Settings'),
+    'description' => t('Configure Maxymiser'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('maxymiser_admin_form'),
+    'access arguments' => array('administer maxymiser'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'maxymiser.admin.inc',
+   );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function maxymiser_permission() {
+  return array(
+    'administer maxymiser' => array(
+      'title' => t('Administer Maxymiser'),
+      'description' => t('Configure Maxymiser.'),
+    ),
+  );
+}
+
+/**
+ * Get Maxymiser url
+ */
+function maxymiser_get_url() {
+  return variable_get('maxymiser_url', '');
+}
+
+/**
+ * Get Maxymiser exclude roles
+ */
+function maxymiser_get_exclude_roles() {
+  return variable_get('maxymiser_exclude_roles', array());
+}
+
+/**
+ * Get Maxymiser exclude paths
+ */
+function maxymiser_get_exclude_paths() {
+  return variable_get('maxymiser_exclude_paths', MAXYMISER_EXCLUDE_PATHS);
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function maxymiser_page_alter(&$page) {
+  // Only embed script for allowed paths and roles
+  if (!_maxymiser_exclude_current_path() && !_maxymiser_exclude_current_role() && $url = maxymiser_get_url()) {
+    // Add JS to header
+    drupal_add_js($url, array('scope' => 'header', 'type' => 'external'));
+  }
+}
+
+/**
+ * Returns TRUE if the current path exists in the maxymiser_exclude_paths setting
+ */
+function _maxymiser_exclude_current_path () {
+  static $path_match;
+  // Cache visibility result if function is called more than once.
+  if (!isset($path_match)) {
+    // Get exclude path setting
+    $exclude_paths = maxymiser_get_exclude_paths();
+    // Match path if necessary.
+    if (!empty($exclude_paths)) {
+      // Convert path to lowercase. This allows comparison of the same path
+      // with different case. Ex: /Page, /page, /PAGE.
+      $exclude_paths_lwr = drupal_strtolower($exclude_paths);
+      // Convert the Drupal path to lowercase
+      $current_path_lwr = drupal_strtolower(drupal_get_path_alias($_GET['q']));
+      // Compare the lowercase internal and lowercase path alias (if any).
+      $path_match = drupal_match_path($current_path_lwr, $exclude_paths_lwr);
+      if ($current_path_lwr != $_GET['q']) {
+        $path_match = $path_match || drupal_match_path($_GET['q'], $exclude_paths_lwr);
+      }
+    }
+    else {
+      $path_match = TRUE;
+    }
+  }
+  return $path_match;
+}
+
+/**
+ * Exclude tracking for role of current user
+ */
+function _maxymiser_exclude_current_role() {
+  global $user;
+
+  // Track all users by default
+  $exclude_user = FALSE;
+
+  // Get list of roles to exclude from tracking
+  $exclude_roles = maxymiser_get_exclude_roles();
+
+  if (array_sum($exclude_roles) > 0) {
+    // One or more roles are selected.
+    foreach (array_keys($user->roles) as $rid) {
+      // Is the current user a member of one of these exclude roles?
+      if (isset($exclude_roles[$rid]) && $rid == $exclude_roles[$rid]) {
+        $exclude_user = TRUE;
+        break;
+      }
+    }
+  }
+
+  return $exclude_user;
+}
