@@ -25,9 +25,9 @@ your browser.
 
 Configuration
 =============
-The default is set to add the tracking tag to every page except the listed paths. By
-default the following paths are listed for exclusion:
+By default the tracking tag is added to every page except the listed paths.
 
+By default the following paths are listed for exclusion:
 admin
 admin/*
 batch
@@ -35,8 +35,12 @@ node/add*
 node/*/*
 user/*/*
 
-Tracking can also be excluded for specified roles. By default all roles will be tracked.
+Tracking can also be excluded for specified roles.
+By default all roles will be tracked.
 
 Sample Tag
 ==========
-<script type="text/javascript" src="//service.maxymiser.net/cdn/<<YOUR SITE ID>>/js/mmcore.js"></script>
+<script 
+  type="text/javascript" 
+  src="//service.maxymiser.net/cdn/<<YOUR SITE ID>>/js/mmcore.js">
+</script>

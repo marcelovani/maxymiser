@@ -103,7 +103,7 @@ function _maxymiser_exclude_current_path() {
 }
 
 /**
- * Exclude tracking for role of current user
+ * Exclude tracking for role of current user.
  */
 function _maxymiser_exclude_current_role() {
   global $user;

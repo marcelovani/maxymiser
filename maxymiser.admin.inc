@@ -1,12 +1,11 @@
 <?php
 /**
  * @file
- *
- * Admin settings form
+ * Admin settings form.
  */
 
 /**
- * Generate admin setting form
+ * Generate admin setting form.
  */
 function maxymiser_admin_form() {
   $form = array();
