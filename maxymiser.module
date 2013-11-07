@@ -1,13 +1,7 @@
 <?php
 /**
- * @file 
- * Adds Maxymiser tag to the header of pages
- *
- * SAMPLE TAG:
- * <script 
- *   type="text/javascript" 
- *   src="//service.maxymiser.net/cdn/<<YOUR SITE ID>>/js/mmcore.js">
- * </script>
+ * @file
+ * Adds Maxymiser tag to the header of pages.
  */
 
 // Remove tracking from all administrative pages.
@@ -70,15 +64,16 @@ function maxymiser_get_exclude_paths() {
  * Implements hook_page_alter().
  */
 function maxymiser_page_alter(&$page) {
-  // Only embed script for allowed paths and roles
+  // Only embed script for allowed paths and roles.
   if (!_maxymiser_exclude_current_path() && !_maxymiser_exclude_current_role() && $url = maxymiser_get_url()) {
-    // Add JS to header
+    // Add JS to header.
     drupal_add_js($url, array('scope' => 'header', 'type' => 'external'));
   }
 }
 
 /**
- * Returns TRUE if the current path should be excluded. 
+ * Returns TRUE if the current path should be excluded.
+ * 
  * - Uses maxymiser_exclude_paths setting.
  */
 function _maxymiser_exclude_current_path() {

@@ -1,7 +1,8 @@
 
 Module: Maxymiser
-Author: Jarrod Irwin <http://drupal.org/user/1370350>
-
+Authors: 
+- Jarrod Irwin <http://drupal.org/user/1370350>
+- David Grayston <https://drupal.org/user/1710528>
 
 Description
 ===========
@@ -23,7 +24,7 @@ HTML header can confirm this by viewing the page source from
 your browser.
 
 Configuration
-====================================================
+=============
 The default is set to add the tracking tag to every page except the listed paths. By
 default the following paths are listed for exclusion:
 
@@ -35,3 +36,7 @@ node/*/*
 user/*/*
 
 Tracking can also be excluded for specified roles. By default all roles will be tracked.
+
+Sample Tag
+==========
+<script type="text/javascript" src="//service.maxymiser.net/cdn/<<YOUR SITE ID>>/js/mmcore.js"></script>
