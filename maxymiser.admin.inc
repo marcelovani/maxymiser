@@ -17,6 +17,7 @@ function maxymiser_admin_form() {
     '#size' => 255,
     '#maxlength' => 255,
     '#required' => TRUE,
+    '#element_validate' => array('_maxymiser_admin_form_url_validate'),
     '#description' => t('Enter the full URL provided by Maxymiser. EG. http://service.maxymiser.net/cdn/YOUR_SITE_ID/js/mmcore.js'),
   );
 
@@ -36,4 +37,15 @@ function maxymiser_admin_form() {
   );
 
   return system_settings_form($form);
+}
+
+/**
+ * Validate Maxymiser url.
+ */
+function _maxymiser_admin_form_url_validate($element, &$form_state) {
+  if (!empty($element['#value']) && !valid_url($element['#value'])) {
+    form_error($element, t('%url is not a valid url', array(
+      '%url' => $element['#value'],
+    )));
+  }
 }

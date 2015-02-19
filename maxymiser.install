@@ -9,7 +9,7 @@
  */
 function maxymiser_uninstall() {
   // Delete module variables.
-  variable_delete('maxymiser_url');
-  variable_delete('maxymiser_exclude_roles');
-  variable_delete('maxymiser_exclude_paths');
+  variable_del('maxymiser_url');
+  variable_del('maxymiser_exclude_roles');
+  variable_del('maxymiser_exclude_paths');
 }
