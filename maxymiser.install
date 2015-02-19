@@ -1,5 +1,10 @@
 <?php
 /**
+ * @file
+ * Maxymiser installation and updates.
+ */
+
+/**
  * Implements hook_uninstall().
  */
 function maxymiser_uninstall() {
