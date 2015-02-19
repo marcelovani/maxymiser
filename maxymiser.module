@@ -67,14 +67,18 @@ function maxymiser_page_alter(&$page) {
   // Only embed script for allowed paths and roles.
   if (!_maxymiser_exclude_current_path() && !_maxymiser_exclude_current_role() && $url = maxymiser_get_url()) {
     // Add JS to header.
-    drupal_add_js($url, array('scope' => 'header', 'type' => 'external', 'group' => JS_DEFAULT));
+    drupal_add_js($url, array(
+      'scope' => 'header',
+      'type' => 'external',
+      'group' => JS_DEFAULT,
+    ));
   }
 }
 
 /**
  * Returns TRUE if the current path should be excluded.
- * 
- * - Uses maxymiser_exclude_paths setting.
+ *
+ * Uses maxymiser_exclude_paths setting.
  */
 function _maxymiser_exclude_current_path() {
   static $path_match;
