@@ -81,6 +81,10 @@ function maxymiser_page_alter(&$page) {
  * Uses maxymiser_exclude_paths setting.
  */
 function _maxymiser_exclude_current_path() {
+  if (path_is_admin(current_path())) {
+    return TRUE;
+  }
+
   static $path_match;
   // Cache visibility result if function is called more than once.
   if (!isset($path_match)) {
