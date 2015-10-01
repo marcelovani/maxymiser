@@ -28,7 +28,6 @@ Configuration
 By default the tracking tag is added to every page except the listed paths.
 
 By default the following paths are listed for exclusion:
-admin
 admin/*
 batch
 node/add*

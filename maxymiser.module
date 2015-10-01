@@ -5,7 +5,7 @@
  */
 
 // Remove tracking from all administrative pages.
-define('MAXYMISER_EXCLUDE_PATHS', "admin\nadmin/*\nbatch\nnode/add*\nnode/*/*\nuser/*/*");
+define('MAXYMISER_EXCLUDE_PATHS', "batch\nnode/add*\nnode/*/*\nuser/*/*");
 
 /**
  * Implements hook_menu().
